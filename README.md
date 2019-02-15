@@ -1,4 +1,4 @@
-# vue-firebase-serverles
+# vue-word-counter
 
 ## Project setup
 ```
