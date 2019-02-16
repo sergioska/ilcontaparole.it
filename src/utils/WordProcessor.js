@@ -9,7 +9,8 @@ export default class WordProcessor {
     const input = s.toString();
     const regex = /[.,:;()?!"”\s\n]/g;
     let result = input.replace(regex, ' ');
-    result = result.replace('&nbsp', '');
+    result = result.replace(/&nbsp;/g, ' ');
+    result = result.replace(/&nbsp/g, ' ');
     result = result.replace(/<[^>]*>/g, ' ');
     return result;
   }
@@ -26,10 +27,12 @@ export default class WordProcessor {
     const res = [];
     const len = arr.length;
     for (let i = 0; i < len; i += 1) {
-      if (typeof res[arr[i]] === 'undefined') {
-        res[arr[i]] = 1;
+      let key = arr[i];
+      key = key.toLowerCase();
+      if (typeof res[key] === 'undefined') {
+        res[key] = 1;
       } else {
-        res[arr[i]] += 1;
+        res[key] += 1;
       }
     }
     return res;

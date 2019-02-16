@@ -89,22 +89,21 @@ export default {
     },
     wordsCounterTotal() {
       const content = this.txtAreaContent;
-      let words = content.split(' ').length;
-      words -= 1;
+      const words = content.split(' ').length;
       return words;
     },
     wordsList() {
       const wp = new WordProcessor();
-      wp.wordsCounter = this.txtAreaContent;
+      wp.wordsCounter = WordProcessor.sanitize(this.txtAreaContent);
       return wp.wordsCounter;
     },
     subwordCounter() {
-      return WordProcessor.subCount(this.txtAreaContent, this.txtKeyword);
+      return WordProcessor.subCount(WordProcessor.sanitize(this.txtAreaContent), this.txtKeyword);
     },
   },
   methods: {
     colorize() {
-      this.txtAreaContent = this.txtAreaContent.replace(/mela/g, '<mark>$&</mark>');
+      this.txtAreaContent = this.txtAreaContent.replace(/[m|M]ela/g, '<mark>$&</mark>');
       this.$refs.childComponent.colorize(this.txtAreaContent);
     },
     strip_html_tags(str) {
