@@ -8,6 +8,7 @@
 
 <style>
 .txtArea {
+  padding: 5px 2px 5px 5px;
   height: 500px;
   border: 1px solid lightgrey;
   max-height: 500px;

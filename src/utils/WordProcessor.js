@@ -7,11 +7,21 @@ export default class WordProcessor {
 
   static sanitize(s) {
     const input = s.toString();
-    const regex = /[.,:;()?!"”\s\n]/g;
+    const regex = /[.,:;()?!"”'’]/g;
     let result = input.replace(regex, ' ');
-    result = result.replace(/&nbsp;/g, ' ');
-    result = result.replace(/&nbsp/g, ' ');
+    result = result.replace(/&nbsp;/g, '');
+    result = result.replace(/&nbsp/g, '');
     result = result.replace(/<[^>]*>/g, ' ');
+    result = result.replace(/<\\[^>]*>/g, ' ');
+    return result;
+  }
+
+  static sanitizeChars(s) {
+    const input = s.toString();
+    let result = input.replace(/&nbsp;/g, '');
+    result = result.replace(/&nbsp/g, '');
+    result = result.replace(/<[^>]*>/g, '');
+    result = result.replace(/<\\[^>]*>/g, '');
     return result;
   }
 
@@ -74,7 +84,9 @@ export default class WordProcessor {
     if (input.length > 1) {
       const aWords = WordProcessor.counter(input);
       const k = Object.keys(aWords);
+      console.log(k);
       const v = Object.values(aWords);
+      console.log(v);
       const len = k.length;
       const output = [];
       let tot = 0;
@@ -83,16 +95,19 @@ export default class WordProcessor {
           tot += v[j];
         }
       }
+      console.log(tot);
       for (let i = 0; i < len; i += 1) {
         if (k[i] !== '') {
           const item = {
             word: k[i],
             numb: v[i],
             perc: WordProcessor.percentage(tot, v[i]),
+            color: '',
           };
           output.push(item);
         }
       }
+      console.log(output);
       this.wordsCounted = output.sort(WordProcessor.compare);
     } else {
       this.wordsCounted = {};
