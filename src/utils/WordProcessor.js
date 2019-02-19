@@ -84,9 +84,7 @@ export default class WordProcessor {
     if (input.length > 1) {
       const aWords = WordProcessor.counter(input);
       const k = Object.keys(aWords);
-      console.log(k);
       const v = Object.values(aWords);
-      console.log(v);
       const len = k.length;
       const output = [];
       let tot = 0;
@@ -95,7 +93,6 @@ export default class WordProcessor {
           tot += v[j];
         }
       }
-      console.log(tot);
       for (let i = 0; i < len; i += 1) {
         if (k[i] !== '') {
           const item = {
@@ -107,7 +104,6 @@ export default class WordProcessor {
           output.push(item);
         }
       }
-      console.log(output);
       this.wordsCounted = output.sort(WordProcessor.compare);
     } else {
       this.wordsCounted = {};
