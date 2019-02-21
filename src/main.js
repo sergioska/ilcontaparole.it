@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueSplit from 'vue-split-panel';
 import BootstrapVue from 'bootstrap-vue';
 import App from './App.vue';
 import router from './router';
@@ -9,6 +10,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.config.productionTip = false;
 
+Vue.use(VueSplit);
 Vue.use(BootstrapVue);
 
 new Vue({

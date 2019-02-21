@@ -13,6 +13,10 @@
   border: 1px solid lightgrey;
   max-height: 500px;
   overflow-y: auto;
+  white-space: nowrap!important;
+}
+span {
+  white-space: nowrap!important;
 }
 </style>
 

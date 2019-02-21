@@ -2,9 +2,6 @@
   <div>
       <b-container fluid>
         <b-row align-h="start">
-          <b-col cols="6">
-            <h1>Conta Caratteri</h1>
-          </b-col>
           <b-col align-v="end">
             <b-button @click="colorize">colorize</b-button>
           </b-col>
@@ -98,7 +95,7 @@ mark {
 }
 .c13 {
   background-color: #7CFC00!important;
-}.
+}
 .c14 {
   background-color: #7FFF00!important;
 }

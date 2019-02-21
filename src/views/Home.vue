@@ -1,17 +1,17 @@
 <template>
   <div class="home">
-    <char-counter></char-counter>
+    <main-layout></main-layout>
   </div>
 </template>
 
 <script>
 
-import CharCounter from '../components/CharCounter.vue';
+import MainLayout from '../components/MainLayout.vue';
 
 export default {
   name: 'home',
   components: {
-    CharCounter,
+    MainLayout,
   },
 };
 </script>
