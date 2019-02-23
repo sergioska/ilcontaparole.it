@@ -10,7 +10,8 @@
       <b-container fluid>
         <b-row>
           <b-col sm="10">
-            <html-textarea v-model="txtAreaContent" ref="childComponent"></html-textarea>
+            <html-textarea v-model="txtAreaContent"
+              ref="childComponent"></html-textarea>
           </b-col>
           <b-col sm="2">
             <b-row class="resume">
@@ -180,6 +181,9 @@ export default {
         }
       }
       return output;
+    },
+    test() {
+      console.log('test');
     },
     strip_html_tags(str) {
       let content = '';

@@ -3,6 +3,7 @@
     v-once
     v-html="value"
     @input="updateHTML"
+    @paste="onPaste"
     class="txtArea"></div>
 </template>
 
@@ -30,7 +31,17 @@ export default {
   },
   methods: {
     updateHTML(e) {
-      this.$emit('input', e.target.innerHTML);
+      const html = e.target.innerHTML;
+      this.$emit('input', html);
+    },
+    onPaste(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      let paste = (e.clipboardData || window.clipboardData).getData('text/plain');
+      paste = paste.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+      const selection = window.getSelection();
+      this.$el.innerHTML += paste;
+      this.$emit('input', this.$el.innerHTML);
     },
     colorize(txt) {
       this.$el.innerHTML = txt;

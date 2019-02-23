@@ -13,7 +13,6 @@ export default class WordProcessor {
     result = result.replace(/&nbsp/g, ' ');
     result = result.replace(/<[^>]*>/g, ' ');
     result = result.replace(/<\\[^>]*>/g, ' ');
-    console.log(result);
     return result;
   }
 
