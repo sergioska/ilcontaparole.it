@@ -38,8 +38,8 @@ export default {
       e.preventDefault();
       e.stopPropagation();
       let paste = (e.clipboardData || window.clipboardData).getData('text/plain');
+      paste = paste.replace(/<[^>]*>/g, ' ');
       paste = paste.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-      const selection = window.getSelection();
       this.$el.innerHTML += paste;
       this.$emit('input', this.$el.innerHTML);
     },

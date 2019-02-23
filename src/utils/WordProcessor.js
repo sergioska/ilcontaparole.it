@@ -7,7 +7,7 @@ export default class WordProcessor {
 
   static sanitize(s) {
     const input = s.toString();
-    const regex = /[.,:;()?!"”'’\t]/g;
+    const regex = /[.,:;()?!"“”'’\t+\-=*^]/g;
     let result = input.replace(regex, ' ');
     result = result.replace(/&nbsp;/g, ' ');
     result = result.replace(/&nbsp/g, ' ');
@@ -40,10 +40,10 @@ export default class WordProcessor {
       let key = arr[i];
       if (key.length > 1) {
         key = key.toLowerCase();
-        if (typeof res[key] === 'undefined') {
-          res[key] = 1;
+        if (typeof res[`${key} `] === 'undefined') {
+          res[`${key} `] = 1;
         } else {
-          res[key] += 1;
+          res[`${key} `] += 1;
         }
       }
     }

@@ -133,6 +133,9 @@ export default {
       return chars;
     },
     wordsCounterTotal() {
+      if (this.txtAreaContent === '') {
+        return 0;
+      }
       const content = this.txtAreaContent;
       const words = content.split(' ').length;
       return words;
@@ -149,6 +152,9 @@ export default {
       return wp.wordsCounter;
     },
     subwordCounter() {
+      if (this.txtKeyword === '') {
+        return 0;
+      }
       return WordProcessor.subCount(WordProcessor.sanitize(this.txtAreaContent), this.txtKeyword);
     },
   },
@@ -156,6 +162,7 @@ export default {
     colorize() {
       this.color = true;
       this.txtAreaContent = this.colorOnText(this.wordsList, this.txtAreaContent);
+      console.log(this.txtAreaContent);
       this.$refs.childComponent.colorize(this.txtAreaContent);
     },
     colorOnText(aWordList, sContent) {
@@ -181,14 +188,6 @@ export default {
         }
       }
       return output;
-    },
-    test() {
-      console.log('test');
-    },
-    strip_html_tags(str) {
-      let content = '';
-      content = str.toString();
-      return content.replace(/<[^>]*>/g, ' ');
     },
   },
 };
