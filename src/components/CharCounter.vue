@@ -9,11 +9,11 @@
       </b-container>
       <b-container fluid>
         <b-row>
-          <b-col sm="10">
+          <b-col sm="9">
             <html-textarea v-model="txtAreaContent"
               ref="childComponent"></html-textarea>
           </b-col>
-          <b-col sm="2">
+          <b-col sm="3">
             <b-row class="resume">
               <b-badge class="center">{{ charsCounter }}</b-badge>&nbsp;&nbsp;caratteri
             </b-row>
@@ -158,11 +158,16 @@ export default {
       return WordProcessor.subCount(WordProcessor.sanitize(this.txtAreaContent), this.txtKeyword);
     },
   },
+  mounted() {
+    this.$refs.childComponent.$on('input', this.eventHandler);
+  },
   methods: {
+    eventHandler() {
+      this.colorize();
+    },
     colorize() {
       this.color = true;
       this.txtAreaContent = this.colorOnText(this.wordsList, this.txtAreaContent);
-      console.log(this.txtAreaContent);
       this.$refs.childComponent.colorize(this.txtAreaContent);
     },
     colorOnText(aWordList, sContent) {

@@ -10,11 +10,9 @@
   "dependencies": {
     "bootstrap": "^4.2.1",
     "bootstrap-vue": "^2.0.0-rc.11",
-    "marked": "^0.6.1",
     "stopword": "^0.1.13",
     "vue": "^2.5.22",
     "vue-router": "^3.0.1",
-    "vue-split-panel": "^1.0.4",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

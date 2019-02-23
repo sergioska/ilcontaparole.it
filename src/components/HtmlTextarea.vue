@@ -9,9 +9,11 @@
 
 <style>
 .txtArea {
+  margin-top: 5px;
   padding: 5px 2px 5px 5px;
   height: 500px;
   border: 1px solid lightgrey;
+  border-radius: 0.25rem;
   max-height: 500px;
   overflow-y: auto;
   white-space: nowrap!important;

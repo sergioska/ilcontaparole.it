@@ -10,14 +10,16 @@
         </b-col>
       </b-row>
     </b-container>
-    <Split>
-      <SplitArea :size="nSize">
-        <char-counter></char-counter>
-      </SplitArea>
-      <SplitArea :size="nSize" v-show="nSize == 50">
-        <char-counter></char-counter>
-      </SplitArea>
-    </Split>
+    <b-container fluid>
+      <b-row>
+        <b-col v-bind:class="nCols">
+          <char-counter></char-counter>
+        </b-col>
+        <b-col v-bind:class="nCols" v-show="splitButton == 'unsplit'">
+          <char-counter></char-counter>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -32,17 +34,17 @@ export default {
   },
   data() {
     return {
-      nSize: 100,
+      nCols: 'col-sm-12',
       splitButton: 'split',
     };
   },
   methods: {
     split() {
-      if (this.nSize === 100) {
-        this.nSize = 50;
+      if (this.nCols === 'col-sm-12') {
+        this.nCols = 'col-sm-6';
         this.splitButton = 'unsplit';
       } else {
-        this.nSize = 100;
+        this.nCols = 'col-sm-12';
         this.splitButton = 'split';
       }
     },
