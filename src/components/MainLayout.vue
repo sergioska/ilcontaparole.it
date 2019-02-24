@@ -3,7 +3,7 @@
     <b-container fluid>
       <b-row align-h="start">
         <b-col cols="11">
-          <h1>Conta Caratteri</h1>
+          <h1>Conta Parole</h1>
         </b-col>
         <b-col cols="1">
           <b-button @click="split">{{ splitButton }}</b-button>

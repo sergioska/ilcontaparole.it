@@ -159,16 +159,15 @@ export default {
     },
   },
   mounted() {
-    this.$refs.childComponent.$on('input', this.eventHandler);
+    this.$refs.childComponent.$on('colorize', this.eventHandler);
   },
   methods: {
-    eventHandler() {
-      this.colorize();
-    },
     colorize() {
       this.color = true;
-      this.txtAreaContent = this.colorOnText(this.wordsList, this.txtAreaContent);
-      this.$refs.childComponent.colorize(this.txtAreaContent);
+      if (this.wordsList.length > 0) {
+        this.txtAreaContent = this.colorOnText(this.wordsList, this.txtAreaContent);
+        this.$refs.childComponent.colorize(this.txtAreaContent);
+      }
     },
     colorOnText(aWordList, sContent) {
       let output = sContent;
@@ -180,6 +179,7 @@ export default {
         limit = 15;
       }
       for (let i = 0; i < limit; i += 1) {
+        aWordList[i].word = aWordList[i].word.trim();
         const firstLetter = aWordList[i].word.substr(0, 1);
         const restWord = aWordList[i].word.substr(1);
         const regex = new RegExp(`\\b[${firstLetter.toLowerCase()}|${firstLetter.toUpperCase()}]${restWord}\\b`, 'g');
@@ -193,6 +193,9 @@ export default {
         }
       }
       return output;
+    },
+    eventHandler() {
+      this.colorize();
     },
   },
 };
