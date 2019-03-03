@@ -66,6 +66,8 @@ export default class WordProcessor {
 
   static subCount(main, sub) {
     let mainStr = WordProcessor.sanitize(main);
+    mainStr = mainStr.replace(/\s+/g, ' ');
+    console.log(mainStr);
     let subStr = sub;
     mainStr += '';
     subStr += '';
@@ -81,7 +83,7 @@ export default class WordProcessor {
   }
 
   set wordsCounter(s) {
-    const words = WordProcessor.toList(s);
+    const words = WordProcessor.toList(WordProcessor.sanitize(s));
     const input = stopword.removeStopwords(words, stopword.it);
     if (input.length > 1) {
       const aWords = WordProcessor.counter(input);

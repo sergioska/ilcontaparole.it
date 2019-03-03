@@ -3,7 +3,10 @@
       <b-container fluid>
         <b-row align-h="start">
           <b-col align-v="end">
+            <!--
             <b-button @click="colorize">colorize</b-button>
+            -->
+            <switches v-model="color" @input="colorize" theme="bulma" color="green" label="colorize"></switches>
           </b-col>
         </b-row>
       </b-container>
@@ -110,6 +113,7 @@ mark {
 
 <script>
 
+import Switches from 'vue-switches';
 import WordProcessor from '../utils/WordProcessor';
 import HtmlTextarea from './HtmlTextarea.vue';
 
@@ -117,6 +121,7 @@ export default {
   name: 'CharCounter',
   components: {
     HtmlTextarea,
+    Switches,
   },
   data() {
     return {
@@ -124,6 +129,7 @@ export default {
       txtKeyword: '',
       markColor: ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13', 'c14', 'c15', 'c16'],
       color: false,
+      originTextArea: '',
     };
   },
   computed: {
@@ -142,7 +148,7 @@ export default {
     },
     wordsList() {
       const wp = new WordProcessor();
-      wp.wordsCounter = WordProcessor.sanitize(this.txtAreaContent);
+      wp.wordsCounter = this.txtAreaContent;
       if (wp.wordsCounter.length > 0 && this.color === true) {
         wp.wordsCounter.map((item, index) => {
           item.color = this.markColor[index];
@@ -155,19 +161,25 @@ export default {
       if (this.txtKeyword === '') {
         return 0;
       }
-      return WordProcessor.subCount(WordProcessor.sanitize(this.txtAreaContent), this.txtKeyword);
+      return WordProcessor.subCount(this.txtAreaContent, this.txtKeyword);
     },
   },
   mounted() {
+    this.color = false;
     this.$refs.childComponent.$on('colorize', this.eventHandler);
   },
   methods: {
     colorize() {
-      this.color = true;
-      if (this.wordsList.length > 0) {
-        this.txtAreaContent = this.colorOnText(this.wordsList, this.txtAreaContent);
-        this.$refs.childComponent.colorize(this.txtAreaContent);
+      if (this.color === true) {
+        if (this.wordsList.length > 0) {
+          this.originTextArea = this.txtAreaContent;
+          this.txtAreaContent = this.colorOnText(this.wordsList, this.txtAreaContent);
+        }
+      } else {
+        this.color = false;
+        this.txtAreaContent = this.originTextArea;
       }
+      this.$refs.childComponent.colorize(this.txtAreaContent);
     },
     colorOnText(aWordList, sContent) {
       let output = sContent;
@@ -195,6 +207,7 @@ export default {
       return output;
     },
     eventHandler() {
+      this.color = true;
       this.colorize();
     },
   },

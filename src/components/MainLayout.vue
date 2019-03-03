@@ -5,8 +5,8 @@
         <b-col cols="11">
           <h1>Conta Parole</h1>
         </b-col>
-        <b-col cols="1">
-          <b-button @click="split">{{ splitButton }}</b-button>
+        <b-col cols="1" align-self="end">
+          <b-button class="vertical" @click="split">{{ splitButton }}</b-button>
         </b-col>
       </b-row>
     </b-container>
@@ -22,6 +22,16 @@
     </b-container>
   </div>
 </template>
+
+<style>
+.vertical {
+  -moz-transform:rotate(-90deg);
+  -ms-transform:rotate(-90deg);
+  -o-transform:rotate(-90deg);
+  -webkit-transform:rotate(-90deg);
+  float: right!important;
+}
+</style>
 
 <script>
 
