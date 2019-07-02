@@ -3,10 +3,22 @@
       <b-container fluid>
         <b-row align-h="start">
           <b-col align-v="end">
-            <!--
-            <b-button @click="colorize">colorize</b-button>
-            -->
-            <switches v-model="color" @input="colorize" theme="bulma" color="green" label="colorize"></switches>
+            <b-row>
+              <b-col sm="1">
+                <switches v-model="color" @input="colorize" theme="bulma" color="green" label="colorize"></switches>
+              </b-col>
+              <b-col sm="1">
+                <switches v-model="multiTextX1" theme="default" color="red" label="x1"></switches>
+              </b-col>
+              <b-col sm="1">
+                <switches v-model="multiTextX2" theme="default" color="red" label="x2"></switches>
+              </b-col>
+              <b-col sm="1">
+                <switches v-model="multiTextX3" theme="default" color="red" label="x3"></switches>
+              </b-col>
+              <b-col sm="8">
+              </b-col>
+            </b-row>
           </b-col>
         </b-row>
       </b-container>
@@ -130,9 +142,61 @@ export default {
       markColor: ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13', 'c14', 'c15', 'c16'],
       color: false,
       originTextArea: '',
+      x1: true,
+      x2: false,
+      x3: false,
+      multiple: 1,
     };
   },
   computed: {
+    multiTextX1: {
+      get: function() {
+        return this.x1;
+      },
+      set: function(value) {
+        if (value === true) {
+          this.x1 = true;
+          this.x2 = false;
+          this.x3 = false;
+          this.color = true;
+          this.multiple = 1;
+          this.txtAreaContent = this.originTextArea;
+          this.colorize();
+        }
+      },
+    },
+    multiTextX2: {
+      get: function() {
+        return this.x2;
+      },
+      set: function(value) {
+        if (value === true) {
+          this.x1 = false;
+          this.x2 = true;
+          this.x3 = false;
+          this.color = false;
+          this.multiple = 2;
+          this.txtAreaContent = this.originTextArea;
+          this.colorize();
+        }
+      },
+    },
+    multiTextX3: {
+      get: function() {
+        return this.x3;
+      },
+      set: function(value) {
+        if (value === true) {
+          this.x1 = false;
+          this.x2 = false;
+          this.x3 = true;
+          this.color = false;
+          this.multiple = 3;
+          this.txtAreaContent = this.originTextArea;
+          this.colorize();
+        }
+      },
+    },
     charsCounter() {
       const content = WordProcessor.sanitizeChars(this.txtAreaContent);
       const chars = content.length;
@@ -147,7 +211,7 @@ export default {
       return words;
     },
     wordsList() {
-      const wp = new WordProcessor();
+      const wp = new WordProcessor(this.multiple);
       wp.wordsCounter = this.txtAreaContent;
       if (wp.wordsCounter.length > 0 && this.color === true) {
         wp.wordsCounter.map((item, index) => {

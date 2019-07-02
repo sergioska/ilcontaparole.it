@@ -1,8 +1,9 @@
 import stopword from 'stopword';
 
 export default class WordProcessor {
-  constructor() {
+  constructor(multiple) {
     this.wordsCounted = {};
+    this.multiple = multiple;
   }
 
   static sanitize(s) {
@@ -29,7 +30,7 @@ export default class WordProcessor {
     const result = WordProcessor.sanitize(s);
     return result.split(/\s/g);
   }
-
+/*
   static counter(arr) {
     if (arr.constructor !== Array) {
       return [];
@@ -48,6 +49,56 @@ export default class WordProcessor {
       }
     }
     return res;
+  }
+*/
+  static counter(wordsArray, number = 1) {
+    if (wordsArray.constructor !== Array) {
+      return [];
+    }
+    const twoWordsArrayKeyExists = [];
+    const output = [];
+    const excludedKeys = [];
+    for (let i = 0; i < wordsArray.length; i += 1) {
+      let objItem = {
+        key: '',
+        value: '',
+        number: 0,
+      };
+      let key = '';
+      let value = '';
+      if (number === 2) {
+        key = `${wordsArray[i]}-${wordsArray[i + 1]}`;
+        value = `${wordsArray[i]} ${wordsArray[i + 1]}`;
+      } else if (number === 3) {
+        key = `${wordsArray[i]}-${wordsArray[i + 1]}-${wordsArray[i + 2]}`;
+        value = `${wordsArray[i]} ${wordsArray[i + 1]} ${wordsArray[i + 2]}`;
+      } else {
+        key = `${wordsArray[i]} `;
+        value = key;
+      }
+      key = key.toLowerCase();
+      value = value.toLowerCase();
+      const checkTwoElements = key.split("-");
+      if (checkTwoElements[0] === '' || 
+          checkTwoElements[1] === '' || 
+          checkTwoElements[2] === '') {
+        excludedKeys.push(key);
+        continue;
+      }
+      if (key.length > 1) {
+          if (twoWordsArrayKeyExists.indexOf(key) === -1) {
+            twoWordsArrayKeyExists.push(key);
+            objItem.key = key;
+            objItem.value = value;
+            objItem.number = 1;
+            output[key] = objItem;
+          } else {
+            objItem = output[key];
+            objItem.number += 1;
+          }
+      }
+    }
+    return output;
   }
 
   static percentage(tot, num) {
@@ -86,7 +137,7 @@ export default class WordProcessor {
     const words = WordProcessor.toList(WordProcessor.sanitize(s));
     const input = stopword.removeStopwords(words, stopword.it);
     if (input.length > 1) {
-      const aWords = WordProcessor.counter(input);
+      const aWords = WordProcessor.counter(input, this.multiple);
       const k = Object.keys(aWords);
       const v = Object.values(aWords);
       const len = k.length;
@@ -94,15 +145,15 @@ export default class WordProcessor {
       let tot = 0;
       for (let j = 0; j < len; j += 1) {
         if (k[j] !== '') {
-          tot += v[j];
+          tot += v[j].number;
         }
       }
       for (let i = 0; i < len; i += 1) {
         if (k[i] !== '') {
           const item = {
-            word: k[i],
-            numb: v[i],
-            perc: WordProcessor.percentage(tot, v[i]),
+            word: v[i].value,
+            numb: v[i].number,
+            perc: WordProcessor.percentage(tot, v[i].number),
             color: '',
           };
           output.push(item);
