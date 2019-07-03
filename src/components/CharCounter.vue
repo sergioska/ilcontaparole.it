@@ -18,7 +18,7 @@
                 <switches v-model="stopOptionSelector" theme="default" color="orange" label="stop words" type-bold="true"></switches>
               </b-col>
               <b-col cols="6" sm="2" xs="6">
-                <b-form-select v-model="selected" :options="options" class="fix-select-component" :disabled="stopOptionDisabled"></b-form-select>
+                <b-form-select v-model="selector" :options="options" class="fix-select-component" :disabled="stopOptionDisabled"></b-form-select>
               </b-col>
               <b-col sm="3" xs="hidden">
               </b-col>
@@ -230,7 +230,19 @@ export default {
           this.stopOptionDisabled = false;
         }
         this.stopOption = value;
-      }
+        this.txtAreaContent = this.originTextArea;
+        this.colorize();
+      },
+    },
+    selector: {
+      get: function() {
+        return this.selected;
+      },
+      set: function(value) {
+        this.selected = value;
+        this.txtAreaContent = this.originTextArea;
+        this.colorize();
+      },
     },
     charsCounter() {
       const content = WordProcessor.sanitizeChars(this.txtAreaContent);
@@ -251,7 +263,8 @@ export default {
     wordsList() {
       let stop;
       if (this.stopOptionSelector) {
-        stop = this.selected;
+        stop = this.selector;
+        console.log(stop);
       }
       const wp = new WordProcessor(this.multiple, stop);
       if (!this.stopUpdateWordList) {
@@ -304,6 +317,7 @@ export default {
       this.$refs.childComponent.colorize(this.txtAreaContent);
     },
     colorOnText(aWordList, sContent) {
+      console.log("COLORONTEXT");
       let output = sContent;
       let j = 0;
       let limit = aWordList.length;

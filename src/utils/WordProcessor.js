@@ -7,7 +7,7 @@ export default class WordProcessor {
     if (stop === 'it') {
       this.stop = stopword.it;
     } else if (stop === 'en') {
-      this.stop = stopword.en
+      this.stop = stopword.en;
     } else {
       this.stop = null;
     }
