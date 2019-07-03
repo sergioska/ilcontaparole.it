@@ -1,9 +1,16 @@
 import stopword from 'stopword';
 
 export default class WordProcessor {
-  constructor(multiple) {
+  constructor(multiple, stop = null) {
     this.wordsCounted = {};
     this.multiple = multiple;
+    if (stop === 'it') {
+      this.stop = stopword.it;
+    } else if (stop === 'en') {
+      this.stop = stopword.en
+    } else {
+      this.stop = null;
+    }
   }
 
   static sanitize(s) {
@@ -114,7 +121,12 @@ export default class WordProcessor {
 
   set wordsCounter(s) {
     const words = WordProcessor.toList(WordProcessor.sanitize(s));
-    const input = stopword.removeStopwords(words, stopword.it);
+    let input;
+    if (this.stop) {
+      input = stopword.removeStopwords(words, this.stop);
+    } else {
+      input = words;
+    }
     if (input.length > 1) {
       const aWords = WordProcessor.counter(input, this.multiple);
       const k = Object.keys(aWords);

@@ -2,24 +2,27 @@
   <div>
       <b-container fluid>
         <b-row align-h="start">
-          <b-col align-v="end">
-            <b-row>
-              <b-col sm="1">
-                <switches v-model="color" @input="colorize" theme="bulma" color="green" label="colorize" :disabled="colorizeDisabled"></switches>
+              <b-col cols="3" sm="3" xs="3">
+                <switches v-model="color" @input="colorize" theme="bulma" color="green" label="colorize" type-bold="true" :disabled="colorizeDisabled"></switches>
               </b-col>
-              <b-col sm="1">
-                <switches v-model="multiTextX1" theme="default" color="red" label="x1"></switches>
+              <b-col cols="3" sm="1" xs="3">
+                <switches v-model="multiTextX1" theme="default" color="red" label="x1" type-bold="true"></switches>
               </b-col>
-              <b-col sm="1">
-                <switches v-model="multiTextX2" theme="default" color="red" label="x2"></switches>
+              <b-col cols="3" sm="1" xs="3">
+                <switches v-model="multiTextX2" theme="default" color="red" label="x2" type-bold="true"></switches>
               </b-col>
-              <b-col sm="1">
-                <switches v-model="multiTextX3" theme="default" color="red" label="x3"></switches>
+              <b-col cols="3" sm="1" xs="3">
+                <switches v-model="multiTextX3" theme="default" color="red" label="x3" type-bold="true"></switches>
               </b-col>
-              <b-col sm="8">
+              <b-col cols="6" sm="1" xs="6">
+                <switches v-model="stopOptionSelector" theme="default" color="orange" label="stop words" type-bold="true"></switches>
+              </b-col>
+              <b-col cols="6" sm="2" xs="6">
+                <b-form-select v-model="selected" :options="options" class="fix-select-component" :disabled="stopOptionDisabled"></b-form-select>
+              </b-col>
+              <b-col sm="3" xs="hidden">
               </b-col>
             </b-row>
-          </b-col>
         </b-row>
       </b-container>
       <b-container fluid>
@@ -124,6 +127,10 @@ mark {
 .single-check-selection {
   background-color: #c87777!important;
 }
+.fix-select-component {
+    vertical-align: middle;
+    margin-top: 19px;
+}
 </style>
 
 <script>
@@ -151,6 +158,13 @@ export default {
       multiple: 1,
       stopUpdateWordList: false,
       colorizeDisabled: false,
+      stopOption: true,
+      stopOptionDisabled: false,
+      selected: 'it',
+      options: [
+        { value: 'it', text: 'it' },
+        { value: 'en', text: 'en' },
+      ]
     };
   },
   computed: {
@@ -205,6 +219,19 @@ export default {
         }
       },
     },
+    stopOptionSelector: {
+      get: function() {
+        return this.stopOption;
+      },
+      set: function(value) {
+        if (!value) {
+          this.stopOptionDisabled = true;
+        } else {
+          this.stopOptionDisabled = false;
+        }
+        this.stopOption = value;
+      }
+    },
     charsCounter() {
       const content = WordProcessor.sanitizeChars(this.txtAreaContent);
       const chars = content.length;
@@ -222,7 +249,11 @@ export default {
       return words;
     },
     wordsList() {
-      const wp = new WordProcessor(this.multiple);
+      let stop;
+      if (this.stopOptionSelector) {
+        stop = this.selected;
+      }
+      const wp = new WordProcessor(this.multiple, stop);
       if (!this.stopUpdateWordList) {
         wp.wordsCounter = this.txtAreaContent;
       } else {
