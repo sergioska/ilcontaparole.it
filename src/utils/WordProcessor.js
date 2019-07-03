@@ -30,27 +30,7 @@ export default class WordProcessor {
     const result = WordProcessor.sanitize(s);
     return result.split(/\s/g);
   }
-/*
-  static counter(arr) {
-    if (arr.constructor !== Array) {
-      return [];
-    }
-    const res = [];
-    const len = arr.length;
-    for (let i = 0; i < len; i += 1) {
-      let key = arr[i];
-      if (key.length > 1) {
-        key = key.toLowerCase();
-        if (typeof res[`${key} `] === 'undefined') {
-          res[`${key} `] = 1;
-        } else {
-          res[`${key} `] += 1;
-        }
-      }
-    }
-    return res;
-  }
-*/
+
   static counter(wordsArray, number = 1) {
     if (wordsArray.constructor !== Array) {
       return [];
@@ -118,7 +98,6 @@ export default class WordProcessor {
   static subCount(main, sub) {
     let mainStr = WordProcessor.sanitize(main);
     mainStr = mainStr.replace(/\s+/g, ' ');
-    console.log(mainStr);
     let subStr = sub;
     mainStr += '';
     subStr += '';
