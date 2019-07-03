@@ -5,7 +5,7 @@
           <b-col align-v="end">
             <b-row>
               <b-col sm="1">
-                <switches v-model="color" @input="colorize" theme="bulma" color="green" label="colorize"></switches>
+                <switches v-model="color" @input="colorize" theme="bulma" color="green" label="colorize" :disabled="colorizeDisabled"></switches>
               </b-col>
               <b-col sm="1">
                 <switches v-model="multiTextX1" theme="default" color="red" label="x1"></switches>
@@ -41,7 +41,7 @@
                    class="resume">
               <b-badge class="center"
                        v-bind:class="item.color">{{ item.numb }} ({{ item.perc }} %) </b-badge>
-                &nbsp;&nbsp;{{ item.word }}
+                &nbsp;&nbsp;<span v-on:click="oneWordHighlighter(item.word)">{{ item.word }}</span>
             </b-row>
           </b-col>
         </b-row>
@@ -121,6 +121,9 @@ mark {
 .c16 {
   background-color: #ADFF2F!important;
 }
+.single-check-selection {
+  background-color: #c87777!important;
+}
 </style>
 
 <script>
@@ -146,6 +149,8 @@ export default {
       x2: false,
       x3: false,
       multiple: 1,
+      stopUpdateWordList: false,
+      colorizeDisabled: false,
     };
   },
   computed: {
@@ -159,6 +164,7 @@ export default {
           this.x2 = false;
           this.x3 = false;
           this.color = true;
+          this.colorizeDisabled = false;
           this.multiple = 1;
           this.txtAreaContent = this.originTextArea;
           this.colorize();
@@ -175,6 +181,7 @@ export default {
           this.x2 = true;
           this.x3 = false;
           this.color = false;
+          this.colorizeDisabled = true;
           this.multiple = 2;
           this.txtAreaContent = this.originTextArea;
           this.colorize();
@@ -191,6 +198,7 @@ export default {
           this.x2 = false;
           this.x3 = true;
           this.color = false;
+          this.colorizeDisabled = true;
           this.multiple = 3;
           this.txtAreaContent = this.originTextArea;
           this.colorize();
@@ -206,13 +214,20 @@ export default {
       if (this.txtAreaContent === '') {
         return 0;
       }
-      const content = this.txtAreaContent;
-      const words = content.split(' ').length;
+      const content = this.originTextArea;
+      let word = content;
+      word = WordProcessor.sanitize(word);
+      word = word.trim().split(/[\s]+/);
+      const words = word.length;
       return words;
     },
     wordsList() {
       const wp = new WordProcessor(this.multiple);
-      wp.wordsCounter = this.txtAreaContent;
+      if (!this.stopUpdateWordList) {
+        wp.wordsCounter = this.txtAreaContent;
+      } else {
+        wp.wordsCounter = this.originTextArea;
+      }
       if (wp.wordsCounter.length > 0 && this.color === true) {
         wp.wordsCounter.map((item, index) => {
           item.color = this.markColor[index];
@@ -233,6 +248,18 @@ export default {
     this.$refs.childComponent.$on('colorize', this.eventHandler);
   },
   methods: {
+    oneWordHighlighter(value) {
+      let output = this.originTextArea;
+      const aWords = value.split(" ");
+      const pattern = `\\b${aWords[0]}\\s(\\w+\\s){0,}${aWords[1]}\\b`;
+      const regex = new RegExp(pattern, 'gi');
+      const strMark = `<mark class="single-check-selection">$&</mark>`;
+      output = output.replace(regex, strMark);
+      this.txtAreaContent = output;
+      this.color = false;
+      this.stopUpdateWordList = true;
+      this.$refs.childComponent.colorize(this.txtAreaContent);
+    },
     colorize() {
       if (this.color === true) {
         if (this.wordsList.length > 0) {
