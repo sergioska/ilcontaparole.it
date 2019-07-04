@@ -38,7 +38,10 @@
                 class="resume">
           <b-badge class="center"
                     v-bind:class="item.color">{{ item.numb }} ({{ item.perc }} %) </b-badge>
-            &nbsp;&nbsp;<span v-on:click="oneWordHighlighter(item.word)">{{ item.word }}</span>
+            &nbsp;&nbsp;<span 
+                            @click="oneWordHighlighter(item.word)" 
+                            @mouseover="makeHover($event)" 
+                            @mouseleave="makeLeave($event)">{{ item.word }}</span>
         </b-row>
       </b-col>
     </b-row>
@@ -124,6 +127,12 @@ mark {
     vertical-align: middle;
     margin-top: 19px;
 }
+.active {
+  border-radius: 2px;
+  padding: 0px 2px 0px 2px!important;
+  color: white;
+  background: #c87777;
+}
 </style>
 
 <script>
@@ -157,7 +166,8 @@ export default {
       options: [
         { value: 'it', text: 'it' },
         { value: 'en', text: 'en' },
-      ]
+      ],
+      hover: false,
     };
   },
   computed: {
@@ -285,6 +295,16 @@ export default {
     this.$refs.childComponent.$on('colorize', this.eventHandler);
   },
   methods: {
+    makeHover(event) {
+      if (!this.x1) {
+        event.target.classList.toggle('active');
+      }
+    },
+    makeLeave(event) {
+      if (!this.x1) {
+        event.target.classList.remove('active');
+      }
+    },
     oneWordHighlighter(value) {
       let output = this.originTextArea;
       const aWords = value.split(" ");
