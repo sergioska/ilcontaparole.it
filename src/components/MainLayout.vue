@@ -5,7 +5,7 @@
         <b-col cols="11">
           <h1>Conta Parole</h1>
         </b-col>
-        <b-col cols="1" align-self="end">
+        <b-col cols="1" sm="1" align-self="end">
           <b-button class="vertical" @click="split">{{ splitButton }}</b-button>
         </b-col>
       </b-row>

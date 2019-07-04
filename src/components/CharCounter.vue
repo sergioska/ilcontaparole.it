@@ -1,65 +1,61 @@
 <template>
   <div>
-      <b-container fluid>
-        <b-row align-h="start">
-              <b-col cols="3" sm="3" xs="3">
-                <switches v-model="color" @input="colorize" theme="bulma" color="green" label="colorize" type-bold="true" :disabled="colorizeDisabled"></switches>
-              </b-col>
-              <b-col cols="3" sm="1" xs="3">
-                <switches v-model="multiTextX1" theme="default" color="red" label="x1" type-bold="true"></switches>
-              </b-col>
-              <b-col cols="3" sm="1" xs="3">
-                <switches v-model="multiTextX2" theme="default" color="red" label="x2" type-bold="true"></switches>
-              </b-col>
-              <b-col cols="3" sm="1" xs="3">
-                <switches v-model="multiTextX3" theme="default" color="red" label="x3" type-bold="true"></switches>
-              </b-col>
-              <b-col cols="6" sm="1" xs="6">
-                <switches v-model="stopOptionSelector" theme="default" color="orange" label="stop words" type-bold="true"></switches>
-              </b-col>
-              <b-col cols="6" sm="2" xs="6">
-                <b-form-select v-model="selector" :options="options" class="fix-select-component" :disabled="stopOptionDisabled"></b-form-select>
-              </b-col>
-              <b-col sm="3" xs="hidden">
-              </b-col>
-            </b-row>
-        </b-row>
-      </b-container>
-      <b-container fluid>
-        <b-row>
-          <b-col sm="9">
-            <html-textarea v-model="txtAreaContent"
-              ref="childComponent"></html-textarea>
+    <b-row align-h="start">
+          <b-col cols="3" sm="3" xs="3">
+            <switches v-model="color" @input="colorize" theme="bulma" color="green" label="colorize" type-bold="true" :disabled="colorizeDisabled"></switches>
           </b-col>
-          <b-col sm="3">
-            <b-row class="resume">
-              <b-badge class="center">{{ charsCounter }}</b-badge>&nbsp;&nbsp;caratteri
-            </b-row>
-            <b-row class="resume">
-              <b-badge class="center">{{ wordsCounterTotal }}</b-badge>&nbsp;&nbsp;parole
-            </b-row>
-            <b-row v-for="(item, index) in wordsList"
-                   v-bind:key="item.word"
-                   v-if="index <= 15"
-                   class="resume">
-              <b-badge class="center"
-                       v-bind:class="item.color">{{ item.numb }} ({{ item.perc }} %) </b-badge>
-                &nbsp;&nbsp;<span v-on:click="oneWordHighlighter(item.word)">{{ item.word }}</span>
-            </b-row>
+          <b-col cols="3" sm="1" xs="3">
+            <switches v-model="multiTextX1" theme="default" color="red" label="x1" type-bold="true"></switches>
+          </b-col>
+          <b-col cols="3" sm="1" xs="3">
+            <switches v-model="multiTextX2" theme="default" color="red" label="x2" type-bold="true"></switches>
+          </b-col>
+          <b-col cols="3" sm="1" xs="3">
+            <switches v-model="multiTextX3" theme="default" color="red" label="x3" type-bold="true"></switches>
+          </b-col>
+          <b-col cols="6" sm="1" xs="6">
+            <switches v-model="stopOptionSelector" theme="default" color="orange" label="stop words" type-bold="true"></switches>
+          </b-col>
+          <b-col cols="6" sm="2" xs="6">
+            <b-form-select v-model="selector" :options="options" class="fix-select-component" :disabled="stopOptionDisabled"></b-form-select>
+          </b-col>
+          <b-col sm="3" xs="hidden">
           </b-col>
         </b-row>
-        <b-row>&nbsp;</b-row>
-        <b-row>
-          <b-col sm="3">
-            <b-form-input v-model="txtKeyword"
-                    type="text"
-                    placeholder="Enter your keyword"></b-form-input>
-          </b-col>
-          <b-col sm="9">
-            <b-badge class="center">{{ subwordCounter }}</b-badge>
-          </b-col>
+    </b-row>
+    <b-row>
+      <b-col sm="9">
+        <html-textarea v-model="txtAreaContent"
+          ref="childComponent"></html-textarea>
+      </b-col>
+      <b-col sm="3">
+        <b-row class="resume">
+          <b-badge class="center">{{ charsCounter }}</b-badge>&nbsp;&nbsp;caratteri
         </b-row>
-    </b-container>
+        <b-row class="resume">
+          <b-badge class="center">{{ wordsCounterTotal }}</b-badge>&nbsp;&nbsp;parole
+        </b-row>
+        <b-row v-for="(item, index) in wordsList"
+                v-bind:key="item.word"
+                v-if="index <= 15"
+                class="resume">
+          <b-badge class="center"
+                    v-bind:class="item.color">{{ item.numb }} ({{ item.perc }} %) </b-badge>
+            &nbsp;&nbsp;<span v-on:click="oneWordHighlighter(item.word)">{{ item.word }}</span>
+        </b-row>
+      </b-col>
+    </b-row>
+    <b-row>&nbsp;</b-row>
+    <b-row>
+      <b-col sm="3">
+        <b-form-input v-model="txtKeyword"
+                type="text"
+                placeholder="Enter your keyword"></b-form-input>
+      </b-col>
+      <b-col sm="9">
+        <b-badge class="center">{{ subwordCounter }}</b-badge>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
