@@ -3,9 +3,10 @@
     v-once
     v-html="value"
     @input="updateHTML"
-    @keydown.enter.prevent
+    @keydown="keyAction"
     @paste="onPaste"
-    class="txtArea"></div>
+    class="txtArea"
+    data-text="use ctrl+v (cmd+v mac) to paste a text here"></div>
 </template>
 
 <style>
@@ -24,6 +25,9 @@
 span {
   white-space: nowrap!important;
   word-wrap: break-word!important;
+}
+[contentEditable=true]:empty:not(:focus):before{
+    content:attr(data-text)
 }
 </style>
 
@@ -59,6 +63,14 @@ export default {
     colorize(txt) {
       this.$el.innerHTML = txt;
     },
+    keyAction(e) {
+      if (e.code !== 'KeyV') {
+        e.preventDefault();
+        e.stopPropagation();
+      } else {
+        return true;
+      }
+    }
   },
 };
 

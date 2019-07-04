@@ -38,9 +38,9 @@
                 class="resume">
           <b-badge class="center"
                     v-bind:class="item.color">{{ item.numb }} ({{ item.perc }} %) </b-badge>
-            &nbsp;&nbsp;<span 
-                            @click="oneWordHighlighter(item.word)" 
-                            @mouseover="makeHover($event)" 
+            &nbsp;&nbsp;<span
+                            @click="oneWordHighlighter(item.word)"
+                            @mouseover="makeHover($event)"
                             @mouseleave="makeLeave($event)">{{ item.word }}</span>
         </b-row>
       </b-col>
@@ -154,6 +154,7 @@ export default {
       markColor: ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13', 'c14', 'c15', 'c16'],
       color: false,
       originTextArea: '',
+      keywordList: [],
       x1: true,
       x2: false,
       x3: false,
@@ -172,10 +173,10 @@ export default {
   },
   computed: {
     multiTextX1: {
-      get: function() {
+      get() {
         return this.x1;
       },
-      set: function(value) {
+      set(value) {
         if (value === true) {
           this.x1 = true;
           this.x2 = false;
@@ -189,10 +190,10 @@ export default {
       },
     },
     multiTextX2: {
-      get: function() {
+      get() {
         return this.x2;
       },
-      set: function(value) {
+      set(value) {
         if (value === true) {
           this.x1 = false;
           this.x2 = true;
@@ -206,10 +207,10 @@ export default {
       },
     },
     multiTextX3: {
-      get: function() {
+      get() {
         return this.x3;
       },
-      set: function(value) {
+      set(value) {
         if (value === true) {
           this.x1 = false;
           this.x2 = false;
@@ -223,10 +224,10 @@ export default {
       },
     },
     stopOptionSelector: {
-      get: function() {
+      get() {
         return this.stopOption;
       },
-      set: function(value) {
+      set(value) {
         if (!value) {
           this.stopOptionDisabled = true;
         } else {
@@ -238,10 +239,10 @@ export default {
       },
     },
     selector: {
-      get: function() {
+      get() {
         return this.selected;
       },
-      set: function(value) {
+      set(value) {
         this.selected = value;
         this.txtAreaContent = this.originTextArea;
         this.colorize();
@@ -263,25 +264,26 @@ export default {
       const words = word.length;
       return words;
     },
-    wordsList() {
-      let stop;
-      if (this.stopOptionSelector) {
-        stop = this.selector;
-        console.log(stop);
-      }
-      const wp = new WordProcessor(this.multiple, stop);
-      if (!this.stopUpdateWordList) {
-        wp.wordsCounter = this.txtAreaContent;
-      } else {
-        wp.wordsCounter = this.originTextArea;
-      }
-      if (wp.wordsCounter.length > 0 && this.color === true) {
-        wp.wordsCounter.map((item, index) => {
-          item.color = this.markColor[index];
-          return item;
-        }, this);
-      }
-      return wp.wordsCounter;
+    wordsList: {
+      get() {
+        let stop;
+        if (this.stopOptionSelector) {
+          stop = this.selector;
+        }
+        const wp = new WordProcessor(this.multiple, stop);
+        if (!this.stopUpdateWordList) {
+          wp.wordsCounter = this.txtAreaContent;
+        } else {
+          wp.wordsCounter = this.originTextArea;
+        }
+        if (wp.wordsCounter.length > 0 && this.color === true) {
+          wp.wordsCounter.map((item, index) => {
+            item.color = this.markColor[index];
+            return item;
+          }, this);
+        }
+        return wp.wordsCounter;
+      },
     },
     subwordCounter() {
       if (this.txtKeyword === '') {
@@ -307,7 +309,7 @@ export default {
     },
     oneWordHighlighter(value) {
       let output = this.originTextArea;
-      const aWords = value.split(" ");
+      const aWords = value.split(' ');
       let pattern;
       if (this.x2) {
         pattern = `\\b${aWords[0]}\\s(\\w+\\s){0,}${aWords[1]}\\b`;
