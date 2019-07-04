@@ -67,10 +67,10 @@ export default {
       if (e.code !== 'KeyV') {
         e.preventDefault();
         e.stopPropagation();
-      } else {
-        return true;
+        return false;
       }
-    }
+      return true;
+    },
   },
 };
 

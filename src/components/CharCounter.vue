@@ -21,18 +21,18 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col sm="9">
+      <b-col sm="9" xs="12">
         <html-textarea v-model="txtAreaContent"
           ref="childComponent"></html-textarea>
       </b-col>
-      <b-col sm="3" class="resume">
-        <b-row class="resume">
+      <b-col sm="3" xs="12" class="resume">
+        <div class="resume">
           <b-badge class="center">{{ charsCounter }}</b-badge>&nbsp;&nbsp;caratteri
-        </b-row>
-        <b-row class="resume">
+        </div>
+        <div class="resume">
           <b-badge class="center">{{ wordsCounterTotal }}</b-badge>&nbsp;&nbsp;parole
-        </b-row>
-        <b-row v-for="(item, index) in wordsList"
+        </div>
+        <div v-for="(item, index) in wordsList"
                 v-bind:key="item.word"
                 v-if="index <= 15"
                 class="resume">
@@ -42,7 +42,7 @@
                             @click="oneWordHighlighter(item.word)"
                             @mouseover="makeHover($event)"
                             @mouseleave="makeLeave($event)">{{ item.word }}</span>
-        </b-row>
+        </div>
       </b-col>
     </b-row>
     <b-row>&nbsp;</b-row>
