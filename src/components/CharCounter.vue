@@ -2,22 +2,53 @@
   <div>
     <b-row align-h="start">
       <b-col cols="3" sm="3" xs="3">
-        <switches v-model="color" @input="colorize" theme="bulma" color="green" label="colorize" type-bold="true" :disabled="colorizeDisabled"></switches>
+        <switches
+          v-model="color"
+          @input="colorize"
+          theme="bulma"
+          color="green"
+          label="colorize"
+          type-bold="true"
+          :disabled="colorizeDisabled"></switches>
       </b-col>
       <b-col cols="3" sm="1" xs="3">
-        <switches v-model="multiTextX1" theme="default" color="red" label="x1" type-bold="true"></switches>
+        <switches
+        v-model="multiTextX1"
+        theme="default"
+        color="red"
+        label="x1"
+        type-bold="true"></switches>
       </b-col>
       <b-col cols="3" sm="1" xs="3">
-        <switches v-model="multiTextX2" theme="default" color="red" label="x2" type-bold="true"></switches>
+        <switches
+        v-model="multiTextX2"
+        theme="default"
+        color="red"
+        label="x2"
+        type-bold="true"></switches>
       </b-col>
       <b-col cols="3" sm="1" xs="3">
-        <switches v-model="multiTextX3" theme="default" color="red" label="x3" type-bold="true"></switches>
+        <switches
+        v-model="multiTextX3"
+        theme="default"
+        color="red"
+        label="x3"
+        type-bold="true"></switches>
       </b-col>
       <b-col cols="6" sm="1" xs="6">
-        <switches v-model="stopOptionSelector" theme="default" color="orange" label="stop words" type-bold="true"></switches>
+        <switches
+        v-model="stopOptionSelector"
+        theme="default"
+        color="orange"
+        label="stop words"
+        type-bold="true"></switches>
       </b-col>
       <b-col cols="6" sm="2" xs="6">
-        <b-form-select v-model="selector" :options="options" class="fix-select-component" :disabled="stopOptionDisabled"></b-form-select>
+        <b-form-select
+        v-model="selector"
+        :options="options"
+        class="fix-select-component"
+        :disabled="stopOptionDisabled"></b-form-select>
       </b-col>
     </b-row>
     <b-row>
