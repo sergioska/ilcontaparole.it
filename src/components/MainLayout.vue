@@ -7,7 +7,7 @@
             <h1>Conta Parole</h1>
           </b-col>
           <b-col cols="12" sm="9" xs="12" class="col-zero-px">
-            <vue-goodshare-facebook 
+            <vue-goodshare-facebook
               page_url="https://sergioska.github.io/vue-word-counter"
               has_counter
               has_icon>
@@ -22,7 +22,7 @@
               has_counter
               has_icon>
               </vue-goodshare-reddit>
-            <vue-goodshare-twitter 
+            <vue-goodshare-twitter
               page_url="https://sergioska.github.io/vue-word-counter"
               has_counter
               has_icon>
@@ -93,10 +93,10 @@
 
 <script>
 
-import VueGoodshareFacebook from "vue-goodshare/src/providers/Facebook.vue";
-import VueGoodshareLinkedin from "vue-goodshare/src/providers/LinkedIn.vue";
-import VueGoodshareReddit from "vue-goodshare/src/providers/Reddit.vue";
-import VueGoodshareTwitter from "vue-goodshare/src/providers/Twitter.vue";
+import VueGoodshareFacebook from 'vue-goodshare/src/providers/Facebook.vue';
+import VueGoodshareLinkedin from 'vue-goodshare/src/providers/LinkedIn.vue';
+import VueGoodshareReddit from 'vue-goodshare/src/providers/Reddit.vue';
+import VueGoodshareTwitter from 'vue-goodshare/src/providers/Twitter.vue';
 import CharCounter from './CharCounter.vue';
 
 export default {

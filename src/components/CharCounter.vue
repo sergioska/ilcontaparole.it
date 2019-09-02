@@ -13,7 +13,10 @@
       </b-col>
       <b-col cols="1" sm="1" xs="1">
         <div>
-          <b-button class="clear-button" variant="outline-danger" @click="clearTxtArea()">reset</b-button>
+          <b-button
+            class="clear-button"
+            variant="outline-danger"
+            @click="clearTxtArea()">reset</b-button>
         </div>
       </b-col>
       <b-col cols="3" sm="1" xs="3">
@@ -68,16 +71,19 @@
         <div class="resume">
           <b-badge class="center">{{ wordsCounterTotal }}</b-badge>&nbsp;&nbsp;parole
         </div>
-        <div v-for="(item, index) in wordsList"
-                v-bind:key="item.word"
-                v-if="index <= 15"
-                class="resume">
-          <b-badge class="center"
-                    v-bind:class="item.color">{{ item.numb }} ({{ item.perc }} %) </b-badge>
-            &nbsp;&nbsp;<span
-                            @click="oneWordHighlighter(item.word)"
-                            @mouseover="makeHover($event)"
-                            @mouseleave="makeLeave($event)">{{ item.word }}</span>
+        <!-- eslint-disable vue/no-use-v-if-with-v-for,vue/no-confusing-v-for-v-if -->
+        <div
+          v-for="(item, index) in wordsList"
+          v-bind:key="item.word"
+          class="resume">
+          <div v-if="index <= 15">
+            <b-badge class="center"
+                      v-bind:class="item.color">{{ item.numb }} ({{ item.perc }} %) </b-badge>
+              &nbsp;&nbsp;<span
+                              @click="oneWordHighlighter(item.word)"
+                              @mouseover="makeHover($event)"
+                              @mouseleave="makeLeave($event)">{{ item.word }}</span>
+          </div>
         </div>
       </b-col>
     </b-row>
