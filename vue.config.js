@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: 'vue-word-counter',
+  publicPath: '',
   configureWebpack: {
     devtool: 'source-map',
   },

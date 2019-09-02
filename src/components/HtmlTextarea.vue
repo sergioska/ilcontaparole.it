@@ -63,7 +63,13 @@ export default {
     colorize(txt) {
       this.$el.innerHTML = txt;
     },
+    clear() {
+      this.$el.innerHTML = '';
+    },
     keyAction(e) {
+      if (e.code === 'KeyD') {
+        this.clear();
+      }
       if (e.code !== 'KeyV') {
         e.preventDefault();
         e.stopPropagation();

@@ -12,6 +12,7 @@
     "bootstrap-vue": "^2.0.0-rc.18",
     "stopword": "^0.1.13",
     "vue": "^2.5.22",
+    "vue-goodshare": "^1.3.2",
     "vue-router": "^3.0.1",
     "vue-switches": "^2.0.1",
     "vuex": "^3.0.1"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-row align-h="start">
-      <b-col cols="3" sm="3" xs="3">
+      <b-col cols="2" sm="2" xs="2">
         <switches
           v-model="color"
           @input="colorize"
@@ -10,6 +10,11 @@
           label="colorize"
           type-bold="true"
           :disabled="colorizeDisabled"></switches>
+      </b-col>
+      <b-col cols="1" sm="1" xs="1">
+        <div>
+          <b-button class="clear-button" variant="outline-danger" @click="clearTxtArea()">reset</b-button>
+        </div>
       </b-col>
       <b-col cols="3" sm="1" xs="3">
         <switches
@@ -163,6 +168,10 @@ mark {
   padding: 0px 2px 0px 2px!important;
   color: white;
   background: #c87777;
+}
+.clear-button {
+  margin-top: 24px;
+  padding: 2px 5px!important;
 }
 </style>
 
@@ -393,6 +402,10 @@ export default {
         }
       }
       return output;
+    },
+    clearTxtArea() {
+      this.txtAreaContent = '';
+      this.$refs.childComponent.clear();
     },
     eventHandler() {
       this.color = true;
