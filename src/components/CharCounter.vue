@@ -103,7 +103,7 @@
 
 <style>
 .resume {
-  padding: 2px;
+  /*padding: 2px;*/
 }
 .center {
   margin: 3px;
